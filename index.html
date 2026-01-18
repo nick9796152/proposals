@@ -16,7 +16,11 @@
       --text-muted: #a89f8a;
     }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
     body {
       font-family: 'Cormorant Garamond', Georgia, serif;
@@ -178,7 +182,6 @@
 </head>
 <body>
   <div class="book" id="book">
-    
     <div class="page page-cover" id="cover">
       <div class="page-front cover-front">
         <span class="cover-corner tl">❧</span><span class="cover-corner tr">❧</span>
@@ -208,7 +211,7 @@
           <div class="service-section">
             <h3 class="service-title">2. Ongoing Marketing</h3>
             <p class="service-description">
-              Posting regularly, sharing your food, and responding to guests.
+              Posting regularly, sharing your food, and responding to guests. 
               <span class="addon-tag">(Optional Add-ons)</span>: We can help form agreements with local influencers and manage paid advertisements on Meta and Google to scale your reach.
             </p>
           </div>
@@ -275,60 +278,36 @@
         <div class="page-content">
           <h2 class="page-title">Your Thoughts</h2>
           <div class="divider"><span class="divider-line"></span><span>◆</span><span class="divider-line"></span></div>
-          
-          <form name="feedback" method="POST" data-netlify="true" id="feedbackForm">
-            <input type="hidden" name="form-name" value="feedback" />
-            <p class="feedback-question">Is this something you might be looking for?</p>
-            
-            <div class="star-rating" id="confidenceRating">
-              <span class="star" data-value="1">★</span>
-              <span class="star" data-value="2">★</span>
-              <span class="star" data-value="3">★</span>
-              <span class="star" data-value="4">★</span>
-              <span class="star" data-value="5">★</span>
-            </div>
-            <input type="hidden" name="rating" id="ratingInput" value="0">
-            
-            <div class="rating-label"><span>Nope</span><span>Kind Of</span><span>Completely!</span></div>
-            <p class="feedback-question">What did you like most?</p>
-            <textarea class="feedback-textarea" name="message" id="feedbackText" placeholder="I really liked..."></textarea>
-            <button type="submit" class="submit-btn" id="sendFeedbackBtn">Send Feedback</button>
-          </form>
-
+          <p class="feedback-question">Is this something you might be looking for?</p>
+          <div class="star-rating" id="confidenceRating"><span class="star" data-value="1">★</span><span class="star" data-value="2">★</span><span class="star" data-value="3">★</span><span class="star" data-value="4">★</span><span class="star" data-value="5">★</span></div>
+          <div class="rating-label"><span>Nope</span><span>Kind Of</span><span>Completely!</span></div>
+          <p class="feedback-question">What did you like most?</p>
+          <textarea class="feedback-textarea" id="feedbackText" placeholder="I really liked..."></textarea>
+          <button class="submit-btn" id="sendFeedbackBtn">Send Feedback</button>
         </div>
       </div>
-      <div class="page-back">
-        <div class="page-content" style="justify-content:center;align-items:center">
-          <p class="thank-you">Thank You :)</p>
-        </div>
-      </div>
+      <div class="page-back"><div class="page-content" style="justify-content:center;align-items:center"><p class="thank-you">Thank You :)</p></div></div>
     </div>
   </div>
 
   <script>
     const pages = [document.getElementById('cover'), document.getElementById('page1'), document.getElementById('page2'), document.getElementById('page3'), document.getElementById('page4')];
-    
     function flipPage(i) { pages[i].classList.add('flipped'); }
     function unflipPage(i) { pages[i].classList.remove('flipped'); }
-
     document.getElementById('goToFeedback').addEventListener('click', () => flipPage(3));
-
     pages.forEach((p, i) => {
       p.addEventListener('click', (e) => {
-        // Prevent flipping if clicking form elements or interactive inputs
-        if (e.target.closest('.demo-interactive') || e.target.closest('form') || e.target.tagName === 'A' || e.target.tagName === 'BUTTON' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'INPUT') return;
+        if (e.target.closest('.demo-interactive') || e.target.closest('.star-rating') || e.target.tagName === 'A' || e.target.tagName === 'BUTTON' || e.target.tagName === 'TEXTAREA') return;
         p.classList.contains('flipped') ? unflipPage(i) : flipPage(i);
       });
     });
 
-    // AI Demo Logic
     const demoTabs = document.querySelectorAll('.demo-tab'), demoInput = document.getElementById('demoInput'), demoBtn = document.getElementById('demoGenerateBtn'), demoOut = document.getElementById('demoOutput');
     let mode = 'caption';
     demoTabs.forEach(t => t.addEventListener('click', () => {
       demoTabs.forEach(x => x.classList.remove('active')); t.classList.add('active');
       mode = t.dataset.mode; demoInput.placeholder = mode === 'caption' ? "Describe the dish..." : "Paste review here...";
     }));
-    
     demoBtn.addEventListener('click', async () => {
       const val = demoInput.value.trim(); if (!val) return;
       demoBtn.innerText = "Cooking..."; demoBtn.disabled = true;
@@ -337,33 +316,14 @@
       demoBtn.innerText = "✦ Generate"; demoBtn.disabled = false;
     });
 
-    // Star Rating Logic
-    const stars = document.querySelectorAll('.star');
-    const ratingInput = document.getElementById('ratingInput');
-
+    const stars = document.querySelectorAll('.star'); let rating = 0;
     stars.forEach(s => s.addEventListener('click', () => {
-      const val = s.dataset.value;
-      ratingInput.value = val;
-      stars.forEach(x => x.classList.toggle('active', x.dataset.value <= val));
+      rating = s.dataset.value;
+      stars.forEach(x => x.classList.toggle('active', x.dataset.value <= rating));
     }));
-
-    // Netlify Form Submission
-    document.getElementById('feedbackForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const myForm = e.target;
-      const formData = new FormData(myForm);
-      
-      try {
-        await fetch("/", {
-          method: "POST",
-          headers: { "Content-Type": "application/x-www-form-urlencoded" },
-          body: new URLSearchParams(formData).toString(),
-        });
-        // Success: Flip to the thank you page (index 4)
-        flipPage(4);
-      } catch (error) {
-        alert("There was a problem sending your feedback. Please try again.");
-      }
+    document.getElementById('sendFeedbackBtn').addEventListener('click', () => {
+      const text = document.getElementById('feedbackText').value;
+      window.location.href = `mailto:nicholas.s.scotto@gmail.com?subject=Proposal Feedback&body=Confidence: ${rating}/5%0A%0AFedback: ${encodeURIComponent(text)}`;
     });
   </script>
 </body>
