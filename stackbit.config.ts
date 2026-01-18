@@ -5,13 +5,15 @@ export default defineStackbitConfig({
   contentSources: [
     new GitContentSource({
       rootPath: __dirname,
-      contentDirs: ["."], // Look in the main folder
+      contentDirs: ["."], 
+      // Add this line to ignore system folders and stop the errors
+      excludePaths: [".netlify", "node_modules", ".git", "package.json", "package-lock.json"],
       models: [
         {
           name: "Page",
           type: "page",
-          urlPath: "/",
-          filePath: "index.html", // Point directly to your file
+          urlPath: "/", 
+          filePath: "index.html", 
           fields: [
             // 1. Cover Section
             { name: "title", type: "string", required: true },
@@ -34,7 +36,6 @@ export default defineStackbitConfig({
       ]
     })
   ],
-  // This section FIXES the "Sitemap is empty" error
   siteMap: ({ documents, models }) => {
     const pageModels = models.filter((m) => m.type === "page");
 
