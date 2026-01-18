@@ -80,23 +80,17 @@
 
     .page-front::before, .page-back::before {
       content: '';
-      position: absolute;
-      left: 0;
-      top: 10px;
-      bottom: 10px;
-      width: 12px;
+      position: absolute; left: 0; top: 10px; bottom: 10px; width: 12px;
       background: linear-gradient(90deg, #0a0a0a, #151515);
       border-right: 1px solid rgba(201, 162, 39, 0.3);
     }
 
     .page.flipped { transform: rotateY(-180deg); }
-
     .page-cover { z-index: 5; }
     .page-1 { z-index: 4; }
     .page-2 { z-index: 3; }
     .page-3 { z-index: 2; }
     .page-4 { z-index: 1; }
-
     .page-cover.flipped { z-index: 1; }
     .page-1.flipped { z-index: 2; }
     .page-2.flipped { z-index: 3; }
@@ -104,11 +98,7 @@
     .page-4.flipped { z-index: 5; }
 
     .cover-front {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      padding: 30px;
+      display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 30px;
       background: linear-gradient(145deg, #1f1f1f 0%, #0c0c0c 100%);
     }
 
@@ -119,14 +109,8 @@
     .cover-corner.br { bottom: 18px; right: 18px; }
 
     .cover-title {
-      font-family: 'Cinzel', serif;
-      font-size: 2.2rem;
-      font-weight: 700;
-      color: var(--gold);
-      letter-spacing: 0.12em;
-      text-shadow: 0 2px 20px rgba(201, 162, 39, 0.4);
-      text-align: center;
-      margin-bottom: 15px;
+      font-family: 'Cinzel', serif; font-size: 2.2rem; font-weight: 700; color: var(--gold); letter-spacing: 0.12em;
+      text-shadow: 0 2px 20px rgba(201, 162, 39, 0.4); text-align: center; margin-bottom: 15px;
     }
 
     .cover-ornament { color: var(--gold-dark); font-size: 1.3rem; letter-spacing: 0.5em; margin-bottom: 15px; }
@@ -143,9 +127,7 @@
     .divider-line { width: 35px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold-dark), transparent); }
 
     .service-section { margin: 10px 0; }
-    .service-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 4px; }
     .service-title { font-family: 'Cinzel', serif; font-size: 0.9rem; color: var(--gold); letter-spacing: 0.04em; }
-    .service-timing { font-style: italic; color: var(--gold-dark); font-size: 0.75rem; }
     .service-description { font-size: 0.85rem; color: var(--text-cream); opacity: 0.9; }
     .addon-tag { color: var(--gold-light); font-weight: bold; font-style: italic; }
 
@@ -180,12 +162,13 @@
     .quote-author { font-size: 0.85rem; color: var(--gold); }
   </style>
 </head>
-<body>
+
+<body data-sb-object-id="index.html">
   <div class="book" id="book">
     <div class="page page-cover" id="cover">
       <div class="page-front cover-front">
         <span class="cover-corner tl">❧</span><span class="cover-corner tr">❧</span>
-        <h1 class="cover-title">Uyghur Eats</h1>
+        <h1 class="cover-title" data-sb-field-path="title">Uyghur Eats</h1>
         <div class="cover-ornament">◆ ◆ ◆</div>
         <p class="cover-subtitle">Growth Special</p>
         <div class="cover-footer"><p class="prepared-by">prepared by Nicholas Scotto</p></div>
@@ -278,7 +261,7 @@
           <h2 class="page-title">Your Thoughts</h2>
           <div class="divider"><span class="divider-line"></span><span>◆</span><span class="divider-line"></span></div>
           <p class="feedback-question">How confident are you in these ideas?</p>
-          <div class="star-rating" id="confidenceRating"><span class="star" data-value="1">★</span><span class="star" data-value="2">★</span><span class="star" data-value="3">★</span><span class="star" data-value=\"4">★</span><span class="star" data-value="5">★</span></div>
+          <div class="star-rating" id="confidenceRating"><span class="star" data-value="1">★</span><span class="star" data-value="2">★</span><span class="star" data-value="3">★</span><span class="star" data-value="4">★</span><span class="star" data-value="5">★</span></div>
           <div class="rating-label"><span>Not Confident</span><span>Possible</span><span>Extremely</span></div>
           <p class="feedback-question">What did you like most?</p>
           <textarea class="feedback-textarea" id="feedbackText" placeholder="I really liked..."></textarea>
